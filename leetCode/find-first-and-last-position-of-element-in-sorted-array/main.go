@@ -84,7 +84,41 @@ func searchRange2(nums []int, target int) []int {
 	}
 	return position
 }
+func searchRange3(nums []int, target int) []int {
+	ans := make([]int, 2)
+	ans[0], ans[1] = -1, -1
+	if nums == nil || len(nums) == 0 {
+		return ans
+	}
+	i, j := 0, len(nums)-1
 
+	for i <= j {
+		mid := i + (j-i)>>1
+		if nums[mid] <= target {
+			i = mid + 1
+		} else {
+			j = mid - 1
+		}
+	}
+	if nums[i] != target {
+		return ans
+	}
+	ans[1] = i
+
+	i, j = 0, len(nums)-1
+
+	for i <= j {
+		mid := i + (j-i)>>1
+		if nums[mid] < target {
+			i = mid + 1
+		} else {
+			j = mid - 1
+		}
+	}
+	ans[0] = j
+	return ans
+
+}
 func main() {
 	//nums := []int{5, 7, 7, 8, 8, 10}
 	//nums := []int{5, 7, 7, 8, 8, 10}
