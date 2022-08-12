@@ -1,5 +1,7 @@
 package main
 
+import "math"
+
 //
 //func maxSubArray(nums []int) int {
 //	p := make([]int, len(nums))
@@ -18,7 +20,25 @@ package main
 //	}
 //	return max
 //}
+//}
 
+//func maxInt(a, b int) int {
+//	if a < b {
+//		return b
+//	}
+//	return a
+//}
+
+//func maxSubArray(nums []int) int {
+//	p := make([]int, len(nums))
+//	// 查找每行的最大值
+//	p[0] = nums[0]
+//	max := p[0]
+//	for i := 1; i < len(nums); i++ {
+//		p[i] = maxInt(p[i-1]+nums[i], nums[i])
+//		max = maxInt(max, p[i])
+//	}
+//	return max
 func maxInt(a, b int) int {
 	if a < b {
 		return b
@@ -26,17 +46,18 @@ func maxInt(a, b int) int {
 	return a
 }
 func maxSubArray(nums []int) int {
-	p := make([]int, len(nums))
-	// 查找每行的最大值
-	p[0] = nums[0]
-	max := p[0]
-	for i := 1; i < len(nums); i++ {
-		p[i] = maxInt(p[i-1]+nums[i], nums[i])
-		max = maxInt(max, p[i])
+	max := math.MinInt
+	sum := nums[0]
+	for _, num := range nums {
+		if sum <= 0 {
+			sum = num
+		} else {
+			sum += num
+			max = maxInt(max, sum)
+		}
 	}
 	return max
 }
-
 func main() {
 
 }
