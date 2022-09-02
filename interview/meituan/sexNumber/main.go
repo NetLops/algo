@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func getCounts(a, b int) int {
 	count := 0
@@ -38,8 +41,9 @@ func getCounts(a, b int) int {
 	return count
 }
 func main() {
-	a, b := 100000, 999999
+	//a, b := 100000, 999999
 	//fmt.Scanf("%d %d", &a, &b)
 	//fmt.Println(a,b)
-	fmt.Println(getCounts(a, b))
+	//fmt.Println(getCounts(a, b))
+	fmt.Println(math.Pow(2, 10))
 }
