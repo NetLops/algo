@@ -1,5 +1,7 @@
 package main
 
+import "math"
+
 //
 //func max(a, b int) int {
 //	if a < b {
@@ -32,39 +34,68 @@ package main
 //	// fmt.Println(dp)
 //	return maxAns
 //}
-func lengthOfLIS(nums []int) int {
 
-	if nums == nil || len(nums) == 0 {
-		return 0
+//func lengthOfLIS(nums []int) int {
+//
+//	if nums == nil || len(nums) == 0 {
+//		return 0
+//	}
+//	tail := []int{}
+//	j := 0 // 数组长度
+//	for i := 0; i < len(nums); i++ {
+//		if j == 0 {
+//			tail = append(tail, nums[i])
+//			j++
+//		} else {
+//			left, right := 0, j-1
+//			for left <= right {
+//				m := left + (right-left)>>1
+//				if tail[m] < nums[i] {
+//					left = m + 1
+//				} else {
+//					right = m - 1
+//				}
+//			}
+//			// 超过就代表往后加一手了
+//			if left >= j {
+//				tail = append(tail, nums[i])
+//				j++
+//			} else { // 没超过就替换那个最大的
+//				tail[left] = nums[i]
+//			}
+//		}
+//		// fmt.Println(tail)
+//	}
+//
+//	return j
+//}
+
+//
+func lengthOfLIS(nums []int) int {
+	tail := make([]int, len(nums))
+	for i := range tail {
+		tail[i] = math.MaxInt
 	}
-	tail := []int{}
-	j := 0 // 数组长度
-	for i := 0; i < len(nums); i++ {
-		if j == 0 {
-			tail = append(tail, nums[i])
-			j++
-		} else {
-			left, right := 0, j-1
-			for left <= right {
-				m := left + (right-left)>>1
-				if tail[m] < nums[i] {
-					left = m + 1
-				} else {
-					right = m - 1
-				}
-			}
-			// 超过就代表往后加一手了
-			if left >= j {
-				tail = append(tail, nums[i])
-				j++
-			} else { // 没超过就替换那个最大的
-				tail[left] = nums[i]
+	tail[0] = nums[0]
+	for i := 1; i < len(nums); i++ {
+		left, right := 0, i
+		for left < right {
+			mid := left + (right-left)>>1
+			if tail[mid] < nums[i] {
+				left = mid + 1
+			} else {
+				right = mid
 			}
 		}
-		// fmt.Println(tail)
+		tail[i] = nums[i]
 	}
-
-	return j
+	i := 0
+	for ; i < len(tail); i++ {
+		if tail[i] == math.MaxInt {
+			break
+		}
+	}
+	return i
 }
 func main() {
 
