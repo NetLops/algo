@@ -67,4 +67,14 @@ func (h *IntHeap) Push(x interface{}) {
 }
 func main() {
 	fmt.Println(busiestServers(8, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{5, 2, 3, 3, 3, 5, 7, 8, 9, 10}))
+
+	const (
+		NAME1 = 1 << iota
+		NAME2
+		NAME3
+		NAME4
+		NAME5
+	)
+	fmt.Println(NAME1, NAME2, NAME3, NAME4, NAME5)
+
 }
