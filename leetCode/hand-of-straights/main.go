@@ -42,28 +42,56 @@ import (
 //	return true
 //}
 
+//func isNStraightHand(hand []int, groupSize int) bool {
+//	// 贪心
+//	if len(hand)%groupSize != 0 {
+//		return false
+//	}
+//	sort.Ints(hand)
+//	m := map[int]int{}
+//	for i := 0; i < len(hand); i++ {
+//		m[hand[i]]++
+//	}
+//	for i := 0; i < len(hand); i++ {
+//		// 代表已经没了 0 0 1 1 2 2 // 执行到 0 0， 此时 1 1 2 2 都无了
+//		if m[hand[i]] == 0 {
+//			continue
+//		}
+//		for j := 1; j < groupSize; j++ {
+//			if m[hand[i+j]] == 0 {
+//				return false
+//			}
+//			m[hand[i+j]]--
+//		}
+//	}
+//	return true
+//}
+
 func isNStraightHand(hand []int, groupSize int) bool {
-	// 贪心
-	if len(hand)%groupSize != 0 {
+	var n int = len(hand)
+
+	if n%groupSize != 0 {
 		return false
 	}
-	sort.Ints(hand)
-	m := map[int]int{}
-	for i := 0; i < len(hand); i++ {
-		m[hand[i]]++
+
+	var m map[int]int = make(map[int]int)
+	for _, x := range hand {
+		m[x]++
 	}
-	for i := 0; i < len(hand); i++ {
-		// 代表已经没了 0 0 1 1 2 2 // 执行到 0 0， 此时 1 1 2 2 都无了
-		if m[hand[i]] == 0 {
+	sort.Ints(hand)
+
+	for _, x := range hand {
+		if m[x] == 0 {
 			continue
 		}
-		for j := 1; j < groupSize; j++ {
-			if m[hand[i+j]] == 0 {
+		for y := x; y < x+groupSize; y++ {
+			if m[y] == 0 {
 				return false
 			}
-			m[hand[i+j]]--
+			m[y]--
 		}
 	}
+
 	return true
 }
 func main() {
