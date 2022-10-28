@@ -1,31 +1,37 @@
 package main
 
-import (
-	"fmt"
-)
-
-func getShuiXianHua(m, n int) (ans []int) {
-	if m > n {
-		return ans
-	}
-	for i := m; i <= n; i++ {
-		three := i / 100
-		two := (i / 10) % 10
-		one := i % 10
-		if three*three*three+two*two*two+one*one*one == i {
-			ans = append(ans, i)
+func combinationSum(candidates []int, target int) (res [][]int) {
+	item := []int{}
+	var dfs func(index, sum int)
+	dfs = func(index, sum int) {
+		if sum == target {
+			res = append(res, append([]int{}, item...))
+			return
+		} else if sum > target || index >= len(candidates) {
+			return
 		}
+		dfs(index+1, sum)
+		item = append(item, candidates[index])
+		dfs(index, sum+candidates[index])
+		item = item[:len(item)-1]
 	}
+	dfs(0, 0)
 	return
 }
-func main() {
-	m, n := 0, 0
-	_, _ = fmt.Scanln(&m, &n)
-	ans := getShuiXianHua(m, n)
-	if len(ans) == 0 {
-		fmt.Println("no")
+
+func generateParenthesis(n int) (ans []string) {
+	var dfs func(int, int, int, string)
+	dfs = func(index, left, right int, now string) {
+		if left > n || right > left {
+			return
+		}
+		if index == 2*n {
+			ans = append(ans, now)
+			return
+		}
+		dfs(index+1, left+1, right, now+"(")
+		dfs(index+1, left, right+1, now+")")
 	}
-	for i := range ans {
-		fmt.Print(ans[i], " ")
-	}
+	dfs(0, 0, 0, "")
+	return
 }

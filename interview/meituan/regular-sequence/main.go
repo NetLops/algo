@@ -18,7 +18,6 @@ func main() {
 	for i, v := range seq {
 		ans += abs(v - i - 1)
 	}
-	fmt.Println(ans)
 
 }
 
